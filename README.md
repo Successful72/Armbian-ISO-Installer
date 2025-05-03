@@ -8,7 +8,6 @@
 2. 物理机使用：建议将iso放入ventoy的U盘中
 
 6. 具体的操作方法:在安装器所在系统里输入 `ddd` 命令方可调出安装菜单，后按照提示操作即可。
-<br>
 ![localhost lan - VMware ESXi 2025-03-20 10-14-45](https://github.com/user-attachments/assets/ddae80a0-9ff5-4d63-83b5-1f49da18b008)
 
 ## ISO的制作流程
