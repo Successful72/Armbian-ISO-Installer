@@ -11,9 +11,9 @@
 ![localhost lan - VMware ESXi 2025-03-20 10-14-45](https://github.com/user-attachments/assets/ddae80a0-9ff5-4d63-83b5-1f49da18b008)
 
 ## ISO的制作流程
-1. 构建debian live且带EFI引导。
-2. 在该系统内融入目标img镜像和自定义dd写盘脚本。一起打包到filesystem.squashfs文件系统中。该过程包含压缩,保证最终的镜像体积。
-3. 最后将新的squashfs文件和相关文件一起打包为ISO
+1. 构建带EFI引导的debian live系统。
+2. 在该系统内融入目标img镜像和自定义dd写盘脚本，并将二者打包到filesystem.squashfs文件系统。该过程包含压缩，保证最终的镜像体积。
+3. 最后将更新后的squashfs文件和相关文件打包为ISO镜像。
 
 ## 说明
 本项目基于开源项目[debian-live](https://github.com/dpowers86/debian-live)制作。代码全程开源，MIT协议不变。
