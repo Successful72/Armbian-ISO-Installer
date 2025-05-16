@@ -9,9 +9,6 @@ if [ "$VERSION_TYPE" = "debian12_minimal" ]; then
 elif [ "$VERSION_TYPE" = "ubuntu24_minimal" ]; then
   echo "构建ubuntu24_minimal-armbian..." 
   FILE_NAME="Armbian_25.2.1_Uefi-x86_noble_current_6.12.13_minimal.img.xz"
-elif [ "$VERSION_TYPE" = "homeassistant_debian12_minimal" ]; then
-  echo "构建homeassistant全家桶版armbian..." 
-  FILE_NAME="Armbian_25.2.3_Uefi-x86_bookworm_current_6.12.17-homeassistant_minimal.img.xz"
 else 
   echo "构建standard-armbian..."
   FILE_NAME="Armbian_25.2.1_Uefi-x86_noble_current_6.12.13.img.xz"
