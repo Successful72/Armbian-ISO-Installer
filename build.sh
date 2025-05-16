@@ -1,45 +1,61 @@
 #!/bin/bash
 mkdir -p armbian
 
-# 读取环境变量 (带默认值)
+# 设置 Armbian 镜像源（可切换为清华或南大）
+MIRROR_TUNA="https://mirrors.tuna.tsinghua.edu.cn/armbian-releases/uefi-x86/archive"
+MIRROR_NJU="https://mirrors.nju.edu.cn/armbian-releases/uefi-x86/archive"
+
+# 读取版本类型
 VERSION_TYPE="${VERSION_TYPE:-standard}"
+
+# 判断使用哪个版本，构造关键字
 if [ "$VERSION_TYPE" = "debian12_minimal" ]; then
-  echo "构建debian12_minimal-armbian..."
-  FILE_NAME="Armbian_25.2.1_Uefi-x86_bookworm_current_6.12.13_minimal.img.xz"
+  KEYWORD="bookworm_current.*minimal.*img.xz"
+  MIRROR_URL=$MIRROR_NJU
+  echo "构建 debian12_minimal Armbian..."
 elif [ "$VERSION_TYPE" = "ubuntu24_minimal" ]; then
-  echo "构建ubuntu24_minimal-armbian..." 
-  FILE_NAME="Armbian_25.2.1_Uefi-x86_noble_current_6.12.13_minimal.img.xz"
-else 
-  echo "构建standard-armbian..."
-  FILE_NAME="Armbian_25.2.1_Uefi-x86_noble_current_6.12.13.img.xz"
+  KEYWORD="noble_current.*minimal.*img.xz"
+  MIRROR_URL=$MIRROR_TUNA
+  echo "构建 ubuntu24_minimal Armbian..."
+else
+  KEYWORD="noble_current.*(?<!minimal).*img.xz"
+  MIRROR_URL=$MIRROR_TUNA
+  echo "构建 standard Armbian..."
 fi
 
-REPO="wukongdaily/armbian-installer"
-TAG="2025-03-12"
-OUTPUT_PATH="armbian/armbian.img.xz"
+# 获取最新文件名
+FILE_NAME=$(curl -s "$MIRROR_URL/" | grep -oP "Armbian_.*${KEYWORD}" | sort -V | tail -n1)
 
-DOWNLOAD_URL=$(curl -s https://api.github.com/repos/$REPO/releases/tags/$TAG | jq -r '.assets[] | select(.name == "'"$FILE_NAME"'") | .browser_download_url')
-
-if [[ -z "$DOWNLOAD_URL" ]]; then
-  echo "错误：未找到文件 $FILE_NAME"
+if [[ -z "$FILE_NAME" ]]; then
+  echo "错误：未找到符合条件的 Armbian 镜像文件"
   exit 1
 fi
 
-echo "Armbian的镜像下载地址为: $DOWNLOAD_URL"
-echo "开始下载镜像文件: $FILE_NAME -> $OUTPUT_PATH"
+# 构造完整下载链接
+DOWNLOAD_URL="$MIRROR_URL/$FILE_NAME"
+OUTPUT_PATH="armbian/$FILE_NAME"
+
+# 创建输出目录
+mkdir -p armbian
+
+# 下载镜像
+echo "下载地址: $DOWNLOAD_URL"
+echo "下载到: $OUTPUT_PATH"
 curl -L -o "$OUTPUT_PATH" "$DOWNLOAD_URL"
 
+# 解压镜像
 if [[ $? -eq 0 ]]; then
-  echo "镜像下载成功!"
-  file armbian/armbian.img.xz
-  echo "正在解压镜像文件……"
-  xz -d armbian/armbian.img.xz
+  echo "下载成功，文件信息："
+  file "$OUTPUT_PATH"
+  echo "解压中..."
+  xz -d "$OUTPUT_PATH"
   ls -lh armbian/
-  echo "准备合成Armbian安装器"
+  echo "准备合成 Armbian 安装器..."
 else
   echo "下载失败！"
   exit 1
 fi
+
 
 mkdir -p output
 docker run --privileged --rm \
