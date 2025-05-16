@@ -12,7 +12,6 @@ on:
           - "standard"
           - "debian12_minimal"
           - "ubuntu24_minimal"
-          - "homeassistant_debian12_minimal"
 
 jobs:
   build-release:
