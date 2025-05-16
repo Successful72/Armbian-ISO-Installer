@@ -3,7 +3,7 @@
 set -e
 
 # 镜像源（优先使用官方 CDN）
-MIRROR_PRIMARY="https://armbian.tnahosting.net/uefi-x86/archive"
+MIRROR_PRIMARY="https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/"
 TORRENT_PRIMARY="https://dl.armbian.com/uefi-x86/archive"
 
 # 版本选择
