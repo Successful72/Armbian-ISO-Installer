@@ -25,17 +25,17 @@ if [[ -z "$DOWNLOAD_URL" ]]; then
   exit 1
 fi
 
-echo "下载地址: $DOWNLOAD_URL"
+echo "Armbian镜像下载地址: $DOWNLOAD_URL"
 echo "下载文件: $FILE_NAME -> $OUTPUT_PATH"
 curl -L -o "$OUTPUT_PATH" "$DOWNLOAD_URL"
 
 if [[ $? -eq 0 ]]; then
-  echo "下载armbian成功!"
+  echo "下载Armbian成功!"
   file armbian/armbian.img.xz
   echo "正在解压为:armbian.img"
   xz -d armbian/armbian.img.xz
   ls -lh armbian/
-  echo "准备合成 armbian 安装器"
+  echo "准备合成 Armbian 安装器"
 else
   echo "下载失败！"
   exit 1
