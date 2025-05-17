@@ -73,9 +73,9 @@ IMAGE_RENAME="armbian/armbian.img.xz"
 
 echo "文件信息："
 mv "$OUTPUT_PATH" "$IMAGE_RENAME"
-file "$OUTPUT_PATH"
+file "$IMAGE_RENAME"
 echo "正在解压..."
-xz -d "$OUTPUT_PATH"
+xz -d "$IMAGE_RENAME"
 ls -lh armbian/
 echo "准备合成 Armbian 安装器..."
 
