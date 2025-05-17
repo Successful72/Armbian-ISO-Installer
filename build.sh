@@ -13,15 +13,15 @@ VERSION_TYPE="${VERSION_TYPE:-standard}"
 if [ "$VERSION_TYPE" = "debian12_minimal" ]; then
   KEYWORD="bookworm_current"
   FILTER="minimal"
-  echo "构建 debian12_minimal Armbian..."
+  echo "即将构建基于DeBian 12系统的最小压缩版Armbian ISO镜像……"
 elif [ "$VERSION_TYPE" = "ubuntu24_minimal" ]; then
   KEYWORD="noble_current"
   FILTER="minimal"
-  echo "构建 ubuntu24_minimal Armbian..."
+  echo "即将构建基于Ubuntu 22.04系统的最小压缩版Armbian ISO镜像……"
 else
   KEYWORD="noble_current"
   FILTER="-minimal"  # 排除 minimal
-  echo "构建 standard Armbian..."
+  echo "即将构建标准版Armbian镜像……"
 fi
 
 # 下载文件名
@@ -33,7 +33,7 @@ FILE_NAME=$(curl -s "$MIRROR_PRIMARY/" | \
   tail -n 1)
 
 if [[ -z "$FILE_NAME" ]]; then
-  echo "错误：未找到符合条件的 Armbian 镜像文件"
+  echo "错误：未找到符合条件的 Armbian 镜像文件" # 若执行过程中出现该错误，就说明镜像源地址不对，需要更换一个
   exit 1
 fi
 
