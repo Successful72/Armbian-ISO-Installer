@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 创建目录
+mkdir -p armbian
+
 set -e
 
 # 镜像源（优先使用官方 CDN）
@@ -41,8 +44,6 @@ DOWNLOAD_URL="$MIRROR_PRIMARY/$FILE_NAME"
 OUTPUT_PATH="armbian/$FILE_NAME"
 TORRENT_URL="$TORRENT_PRIMARY/${FILE_NAME}.torrent"
 
-# 创建目录
-mkdir -p armbian
 
 # 下载主镜像
 echo "下载地址: $DOWNLOAD_URL"
