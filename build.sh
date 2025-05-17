@@ -3,8 +3,8 @@
 # 创建目录
 mkdir -p armbian
 
-# 镜像源（优先使用官方 CDN）
-MIRROR_PRIMARY="https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/"
+# 镜像源地址（不能使用国内镜像源！GitHub Actions无法访问国内镜像源，后者一般会封锁GitHub Actions的访问请求）
+MIRROR_PRIMARY="https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/" # 台湾数字串流镜像源
 TORRENT_PRIMARY="https://dl.armbian.com/uefi-x86/archive"
 
 # 版本选择
@@ -69,7 +69,7 @@ else
 fi
 
 # 解压
-IMAGE_RENAME="armbian/armbian.img.xz"
+IMAGE_RENAME="armbian/armbian.img.xz" # 这里必须将Armbian镜像名称修改为armbian.img.xz，否则最后制作的ISO镜像无法使用！(具体表现为：原本应为1.4G的ISO镜像只有280M)
 
 echo "文件信息："
 mv "$OUTPUT_PATH" "$IMAGE_RENAME"
