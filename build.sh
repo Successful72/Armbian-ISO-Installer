@@ -21,7 +21,7 @@ elif [ "$VERSION_TYPE" = "ubuntu24_minimal" ]; then
 else
   KEYWORD="noble_current"
   FILTER="-minimal"  # 排除 minimal
-  echo "即将构建标准版Armbian镜像……"
+  echo "即将构建标准版Armbian ISO镜像……"
 fi
 
 # 下载文件名
