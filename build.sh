@@ -1,8 +1,4 @@
 #!/bin/bash
-
-# 创建目录
-mkdir -p armbian
-
 # 镜像源地址（不能使用国内镜像源！GitHub Actions无法访问国内镜像源，后者一般会封锁GitHub Actions的访问请求）
 MIRROR_PRIMARY="https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/" # 台湾数字串流镜像源
 TORRENT_PRIMARY="https://dl.armbian.com/uefi-x86/archive"
@@ -37,15 +33,17 @@ if [[ -z "$FILE_NAME" ]]; then
   exit 1
 fi
 
-# 下载路径
+# 定义下载路径
 DOWNLOAD_URL="$MIRROR_PRIMARY/$FILE_NAME"
 OUTPUT_PATH="armbian/$FILE_NAME"
 TORRENT_URL="$TORRENT_PRIMARY/${FILE_NAME}.torrent"
 
+# 创建目录
+mkdir -p armbian
 
 # 下载主镜像
-echo "下载地址: $DOWNLOAD_URL"
-echo "下载到: $OUTPUT_PATH"
+echo "Armbian镜像的下载地址为: $DOWNLOAD_URL"
+echo "下载路径为: $OUTPUT_PATH"
 
 echo "尝试使用 curl 下载..."
 if curl -L --connect-timeout 10 --retry 3 -o "$OUTPUT_PATH" "$DOWNLOAD_URL"; then
@@ -55,7 +53,7 @@ else
 
   # 检查 aria2 是否存在
   if ! command -v aria2c >/dev/null; then
-    echo "未安装 aria2，正在安装..."
+    echo "未发现aria2工具，正在安装..."
     apt-get update && apt-get install -y aria2
   fi
 
@@ -63,21 +61,20 @@ else
   aria2c -d armbian -o "$FILE_NAME" "$TORRENT_URL"
 
   if [[ ! -f "$OUTPUT_PATH" ]]; then
-    echo "Aria2 下载失败，退出。"
+    echo "Aria2 下载失败！请检查镜像源地址是否拒绝了GitHub Actions访问！脚本即将退出……"
     exit 1
   fi
 fi
 
-# 解压
-IMAGE_RENAME="armbian/armbian.img.xz" # 这里必须将Armbian镜像名称修改为armbian.img.xz，否则最后制作的ISO镜像无法使用！(具体表现为：原本应为1.4G的ISO镜像只有280M)
-
-echo "文件信息："
+# 解压Armbian Img镜像用于构建ISO
+IMAGE_RENAME="armbian/armbian.img.xz" # 必须将Armbian镜像名称修改为armbian.img.xz，否则最后制作的ISO镜像无法使用！(具体表现为：原本应为1.4G的ISO镜像只有280M)
 mv "$OUTPUT_PATH" "$IMAGE_RENAME"
 file "$IMAGE_RENAME"
-echo "正在解压..."
+echo "正在解压Armbian Img镜像..."
 xz -d "$IMAGE_RENAME"
+echo "解压完成！"
 ls -lh armbian/
-echo "准备合成 Armbian 安装器..."
+echo "准备组装Armbian ISO镜像..."
 
 mkdir -p output
 docker run --privileged --rm \
