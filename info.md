@@ -5,4 +5,4 @@
 #### 安装器中的Armbian系统
 #### web地址:插好网线 详见屏幕信息
 #### ssh默认用户名 `root` 密码：1234
-#### Armbian镜像出处:
+#### Armbian镜像出处:[台湾数位串流开源镜像站](https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/)
