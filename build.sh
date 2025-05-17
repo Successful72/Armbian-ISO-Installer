@@ -72,7 +72,7 @@ fi
 IMAGE_RENAME="armbian/armbian.img.xz"
 
 echo "文件信息："
-rename "$OUTPUT_PATH" "$IMAGE_RENAME"
+mv "$OUTPUT_PATH" "$IMAGE_RENAME"
 file "$OUTPUT_PATH"
 echo "正在解压..."
 xz -d "$OUTPUT_PATH"
