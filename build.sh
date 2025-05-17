@@ -3,8 +3,6 @@
 # 创建目录
 mkdir -p armbian
 
-set -e
-
 # 镜像源（优先使用官方 CDN）
 MIRROR_PRIMARY="https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/"
 TORRENT_PRIMARY="https://dl.armbian.com/uefi-x86/archive"
@@ -71,15 +69,15 @@ else
 fi
 
 # 解压
+IMAGE_RENAME="armbian/armbian.img.xz"
+
 echo "文件信息："
+rename "$OUTPUT_PATH" "$IMAGE_RENAME"
 file "$OUTPUT_PATH"
 echo "正在解压..."
 xz -d "$OUTPUT_PATH"
 ls -lh armbian/
 echo "准备合成 Armbian 安装器..."
-
-
-
 
 mkdir -p output
 docker run --privileged --rm \
