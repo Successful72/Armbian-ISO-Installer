@@ -6,5 +6,4 @@
 - 使用SSH连接此安装器自身Debian Live系统：
   - 用户名:root
   - 密码:1234
-<br>
 - Armbian镜像出处:[台湾数位串流开源镜像站](https://mirror.twds.com.tw/armbian-dl/uefi-x86/archive/)
